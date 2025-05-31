@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { db } from 'src/db';
 import { CreateUserDto } from './dto/create-user.dto';
 import { randomUUID } from 'crypto';
@@ -37,7 +37,7 @@ export class UsersService {
         const user = db.users.find(user => user.id === id);
         if (!user) throw new NotFoundException('User Not found');
         if (user.password !== updateDto.oldPassword)
-            throw new NotFoundException('User Not found');
+            throw new ForbiddenException('The password is wrong!');
 
         user.password = updateDto.newPassword;
         user.version++;

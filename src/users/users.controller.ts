@@ -47,15 +47,8 @@ export class UsersController {
             version: '4',
         })) id: string, 
         @Body() dto: UpdateUserDto,
-        @Res() res: Response
     ): Omit<User, 'password'> {
-        const user = this.userService.update(id, dto);
-        if (!user) {
-            res.status(HttpStatus.NOT_FOUND).json({ message: 'User does not found'})
-            return;
-        }
-        res.status(HttpStatus.CREATED).json(user);
-        return user;
+        return this.userService.update(id, dto);
     }
     
     @Delete(':id')
