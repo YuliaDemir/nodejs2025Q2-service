@@ -4,11 +4,9 @@ export class UpdateUserDto {
     @IsUUID('4')
     id: string; // uuid v4
 
-    @IsOptional()
     @IsString()
-    login: string;
+    oldPassword: string;
 
-    @IsOptional()
     @IsString()
-    password: string;
+    newPassword: string;
 }
