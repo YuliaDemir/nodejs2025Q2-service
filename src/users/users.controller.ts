@@ -1,10 +1,11 @@
-import { Body, Controller, Get, HttpStatus, Param, ParseUUIDPipe, Post, Put, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseUUIDPipe, Post, Put, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { validate } from 'uuid';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { NotFoundError } from 'rxjs';
 
 @Controller('user')
 export class UsersController {
@@ -18,7 +19,10 @@ export class UsersController {
 
     @Get(':id')
     getById(
-        @Param('id', new ParseUUIDPipe({ version: '4'})) id: string,
+        @Param('id', new ParseUUIDPipe({ 
+            version: '4',
+            errorHttpStatusCode: 400,
+        })) id: string,
         @Res() res: Response
     ) {
         if (!validate(id)) return res.status(400).json({ message: 'Invalid userId format' });
@@ -39,13 +43,28 @@ export class UsersController {
 
     @Put(':id')
     update(
-        @Param('id') id: string, 
+        @Param('id', new ParseUUIDPipe({ 
+            version: '4',
+        })) id: string, 
         @Body() dto: UpdateUserDto,
         @Res() res: Response
     ): Omit<User, 'password'> {
-        const user = this.userService.update(id, dto)
+        const user = this.userService.update(id, dto);
+        if (!user) {
+            res.status(HttpStatus.NOT_FOUND).json({ message: 'User does not found'})
+            return;
+        }
         res.status(HttpStatus.CREATED).json(user);
         return user;
     }
     
+    @Delete(':id')
+    @HttpCode(204)
+    remove(@Param('id', new ParseUUIDPipe({ 
+            version: '4',
+            errorHttpStatusCode: 400,
+        })) id: string,): void {
+        this.userService.remove(id);
+    }
+
 }
