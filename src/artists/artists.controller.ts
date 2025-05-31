@@ -5,7 +5,8 @@ import { UpdateArtistDto } from './dto/update-artist.dto';
 import { Artist } from './entities/artist.entity';
 
 @Controller('artist')
-export class ArtistsController {constructor(private readonly artistsService: ArtistsService) {}
+export class ArtistsController {
+    constructor(private readonly artistsService: ArtistsService) {}
 
     @Get()
     getAll() {

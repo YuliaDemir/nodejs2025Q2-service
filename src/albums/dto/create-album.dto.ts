@@ -1,13 +1,12 @@
+import { Type } from "class-transformer";
 import { IsInt, IsOptional, IsString, IsUUID } from "class-validator";
 
 export class CreateAlbumDto {
-    @IsUUID('4')
-    id: string; // uuid v4
-
     @IsString()
     name: string;
 
     @IsInt()
+    @Type(() => Number)
     year: number;
 
     @IsUUID('4')
