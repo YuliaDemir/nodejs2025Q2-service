@@ -6,5 +6,6 @@ import { ArtistsService } from './artists.service';
   imports: [ArtistsModule],
   controllers: [ArtistsController],
   providers: [ArtistsService],
+  exports: [ArtistsService],
 })
 export class ArtistsModule {}
