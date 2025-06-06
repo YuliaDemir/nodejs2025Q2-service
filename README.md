@@ -5,27 +5,27 @@
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
 
-### INSTALATION 
+## INSTALATION 
 
-## 1. Downloading
+### 1. Downloading
 
 ```
 git clone https://github.com/YuliaDemir/nodejs2025Q2-service.git
 ```
 
-## 2. Moving to the development branch
+### 2. Moving to the development branch
 
 ```
 git checkout dev
 ```
 
-## 3. Installing NPM modules
+### 3. Installing NPM modules
 
 ```
 npm install
 ```
 
-### RUNNING application
+## RUNNING application
 
 ```
 npm start

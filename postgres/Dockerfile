@@ -1,0 +1,7 @@
+FROM postgres:16
+
+ENV POSTGRES_USER=appuser
+ENV POSTGRES_PASSWORD=apppassword
+ENV POSTGRES_DB=appdb
+
+EXPOSE 5433
