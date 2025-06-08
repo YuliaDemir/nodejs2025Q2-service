@@ -19,12 +19,12 @@ export class AlbumsController {
   constructor(private readonly albumsService: AlbumsService) {}
 
   @Get()
-  getAll() {
+  async getAll() {
     return this.albumsService.findAll();
   }
 
   @Get(':id')
-  getById(
+  async getById(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -38,12 +38,12 @@ export class AlbumsController {
   }
 
   @Post()
-  create(@Body() dto: CreateAlbumDto) {
+  async create(@Body() dto: CreateAlbumDto) {
     return this.albumsService.create(dto);
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -53,13 +53,13 @@ export class AlbumsController {
     )
     id: string,
     @Body() dto: UpdateAlbumDto,
-  ): Album {
+  ): Promise<Album> {
     return this.albumsService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(
+  async remove(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -68,7 +68,7 @@ export class AlbumsController {
       }),
     )
     id: string,
-  ): void {
+  ): Promise<void> {
     this.albumsService.remove(id);
   }
 }
