@@ -19,12 +19,12 @@ export class ArtistsController {
   constructor(private readonly artistsService: ArtistsService) {}
 
   @Get()
-  getAll() {
+  async getAll() {
     return this.artistsService.findAll();
   }
 
   @Get(':id')
-  getById(
+  async getById(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -38,12 +38,12 @@ export class ArtistsController {
   }
 
   @Post()
-  create(@Body() dto: CreateArtistDto) {
+  async create(@Body() dto: CreateArtistDto) {
     return this.artistsService.create(dto);
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -53,13 +53,13 @@ export class ArtistsController {
     )
     id: string,
     @Body() dto: UpdateArtistDto,
-  ): Artist {
+  ): Promise<Artist> {
     return this.artistsService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(
+  async remove(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -68,7 +68,7 @@ export class ArtistsController {
       }),
     )
     id: string,
-  ): void {
+  ): Promise<void> {
     this.artistsService.remove(id);
   }
 }
