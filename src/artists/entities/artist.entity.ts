@@ -1,5 +1,5 @@
-import { Track } from "src/tracks/entities/track.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Track } from 'src/tracks/entities/track.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Artist {

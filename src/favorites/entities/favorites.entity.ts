@@ -1,8 +1,15 @@
-import { Album } from "src/albums/entities/album.entity";
-import { Artist } from "src/artists/entities/artist.entity";
-import { Track } from "src/tracks/entities/track.entity";
-import { User } from "src/users/entities/user.entity";
-import { Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Album } from 'src/albums/entities/album.entity';
+import { Artist } from 'src/artists/entities/artist.entity';
+import { Track } from 'src/tracks/entities/track.entity';
+import { User } from 'src/users/entities/user.entity';
+import {
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Favorites {

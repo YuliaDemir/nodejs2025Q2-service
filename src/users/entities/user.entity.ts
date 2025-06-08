@@ -1,5 +1,13 @@
-import { Favorites } from "src/favorites/entities/favorites.entity";
-import { Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from "typeorm";
+import { Favorites } from 'src/favorites/entities/favorites.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  VersionColumn,
+} from 'typeorm';
 
 @Entity('user')
 export class User {
@@ -15,10 +23,10 @@ export class User {
   @VersionColumn()
   version: number; // integer number, increments on update
 
-  @CreateDateColumn({ type: 'timestamptz'})
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: number; // timestamp of creation
 
-  @UpdateDateColumn({ type: 'timestamptz'})
+  @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: number; // timestamp of last update
 
   @OneToOne(() => Favorites, (favorite) => favorite.user)

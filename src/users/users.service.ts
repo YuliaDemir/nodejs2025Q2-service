@@ -37,7 +37,7 @@ export class UsersService {
     });
   }
 
-  async findById(id: string): Promise<Omit<User, "password">> {
+  async findById(id: string): Promise<Omit<User, 'password'>> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User Not found');
     const safeUser = { ...user };
@@ -45,7 +45,10 @@ export class UsersService {
     return safeUser;
   }
 
-  async update(id: string, updateDto: UpdateUserDto): Promise<Omit<User, "password">> {
+  async update(
+    id: string,
+    updateDto: UpdateUserDto,
+  ): Promise<Omit<User, 'password'>> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User Not found');
     if (user.password !== updateDto.oldPassword)

@@ -14,20 +14,20 @@ import { Repository } from 'typeorm';
 export class FavoritesService {
   constructor(
     @InjectRepository(Favorites)
-      private readonly favoritesRepository: Repository<Favorites>,
+    private readonly favoritesRepository: Repository<Favorites>,
 
     @InjectRepository(Track)
-      private readonly trackRepository: Repository<Track>,
+    private readonly trackRepository: Repository<Track>,
 
     @InjectRepository(Album)
-      private readonly albumRepository: Repository<Album>,
+    private readonly albumRepository: Repository<Album>,
 
     @InjectRepository(Artist)
-      private readonly artistRepository: Repository<Artist>,
-  ) {} 
+    private readonly artistRepository: Repository<Artist>,
+  ) {}
 
   private async getFavorites(): Promise<Favorites> {
-    let favorites = await this.favoritesRepository.findOne();
+    let favorites = await this.favoritesRepository.findOne({ where: {} });
     if (!favorites) {
       favorites = this.favoritesRepository.create({
         tracks: [],
@@ -62,7 +62,7 @@ export class FavoritesService {
 
   async removeTrack(id: string): Promise<void> {
     const fav = await this.getFavorites();
-    const index= fav.tracks.findIndex((t) => t.id === id);
+    const index = fav.tracks.findIndex((t) => t.id === id);
     if (index === -1) throw new NotFoundException('track Not found');
     fav.tracks.splice(index, 1);
     await this.favoritesRepository.save(fav);
@@ -80,9 +80,9 @@ export class FavoritesService {
     return artist;
   }
 
-  async  removeArtist(id: string): Promise<void> {
+  async removeArtist(id: string): Promise<void> {
     const fav = await this.getFavorites();
-    const index= fav.artists.findIndex((t) => t.id === id);
+    const index = fav.artists.findIndex((t) => t.id === id);
     if (index === -1) throw new NotFoundException('artist Not found');
     fav.artists.splice(index, 1);
     await this.favoritesRepository.save(fav);
@@ -102,7 +102,7 @@ export class FavoritesService {
 
   async removeAlbum(id: string): Promise<void> {
     const fav = await this.getFavorites();
-    const index= fav.albums.findIndex((t) => t.id === id);
+    const index = fav.albums.findIndex((t) => t.id === id);
     if (index === -1) throw new NotFoundException('album Not found');
     fav.albums.splice(index, 1);
     await this.favoritesRepository.save(fav);

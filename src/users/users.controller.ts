@@ -65,7 +65,7 @@ export class UsersController {
     )
     id: string,
     @Body() dto: UpdateUserDto,
-  ): Omit<User, 'password'> {
+  ): Promise<Omit<User, 'password'>> {
     return this.userService.update(id, dto);
   }
 

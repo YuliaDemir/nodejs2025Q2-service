@@ -1,6 +1,12 @@
-import { Album } from "src/albums/entities/album.entity";
-import { Artist } from "src/artists/entities/artist.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Album } from 'src/albums/entities/album.entity';
+import { Artist } from 'src/artists/entities/artist.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Track {
@@ -19,11 +25,17 @@ export class Track {
   @Column('int')
   duration: number; // integer number
 
-  @ManyToOne(() => Artist, (artist) => artist.tracks, { nullable: true, onDelete: 'SET NULL'})
+  @ManyToOne(() => Artist, (artist) => artist.tracks, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({ name: 'artistId' })
   artist: Artist;
 
-  @ManyToOne(() => Album, (album) => album.tracks, { nullable: true, onDelete: 'SET NULL'})
+  @ManyToOne(() => Album, (album) => album.tracks, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({ name: 'albumId' })
   album: Album;
 }

@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { randomUUID } from 'crypto';
 import { UpdateAlbumDto } from 'src/albums/dto/update-album.dto';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { Album } from './entities/album.entity';
@@ -9,10 +8,10 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class AlbumsService {
   constructor(
-      @InjectRepository(Album)
-      private readonly albumRepository: Repository<Album>,
-    ) {}
-    
+    @InjectRepository(Album)
+    private readonly albumRepository: Repository<Album>,
+  ) {}
+
   async create(dto: CreateAlbumDto): Promise<Album> {
     const newAlbum = this.albumRepository.create(dto);
     return await this.albumRepository.save(newAlbum);
