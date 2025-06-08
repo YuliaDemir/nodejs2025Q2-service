@@ -23,9 +23,8 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  getAll(@Res() res: Response) {
-    const users = this.userService.findAll();
-    return res.status(HttpStatus.OK).json(users);
+  async getAll(): Promise<Omit<User, 'password'>[]> {
+    return this.userService.findAll();
   }
 
   @Get(':id')
