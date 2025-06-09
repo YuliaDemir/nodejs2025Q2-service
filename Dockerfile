@@ -1,4 +1,5 @@
-FROM node:20-alpine
+#stage1
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -8,6 +9,21 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+
+#stage2
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install --production
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/.env ./
+
+
 EXPOSE 3000
 
-CMD ["npm", "start", "start:dev"]
+CMD ["node", "dist/main.js"]
