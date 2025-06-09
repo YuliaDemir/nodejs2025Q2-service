@@ -4,7 +4,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Artist {
   @PrimaryGeneratedColumn('uuid')
-  id: string; // uuid v4
+  id: string;
 
   @Column()
   name: string;

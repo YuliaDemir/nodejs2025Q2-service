@@ -20,7 +20,7 @@ export class AlbumsController {
 
   @Get()
   async getAll() {
-    return this.albumsService.findAll();
+    return await this.albumsService.findAll();
   }
 
   @Get(':id')
@@ -34,12 +34,12 @@ export class AlbumsController {
     )
     id: string,
   ) {
-    return this.albumsService.findById(id);
+    return await this.albumsService.findById(id);
   }
 
   @Post()
   async create(@Body() dto: CreateAlbumDto) {
-    return this.albumsService.create(dto);
+    return await this.albumsService.create(dto);
   }
 
   @Put(':id')
@@ -54,7 +54,7 @@ export class AlbumsController {
     id: string,
     @Body() dto: UpdateAlbumDto,
   ): Promise<Album> {
-    return this.albumsService.update(id, dto);
+    return await this.albumsService.update(id, dto);
   }
 
   @Delete(':id')
@@ -68,7 +68,7 @@ export class AlbumsController {
       }),
     )
     id: string,
-  ): Promise<void> {
-    this.albumsService.remove(id);
+  ) {
+    return await this.albumsService.remove(id);
   }
 }

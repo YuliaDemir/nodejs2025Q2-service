@@ -1,5 +1,7 @@
 import { Favorites } from 'src/favorites/entities/favorites.entity';
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -14,7 +16,7 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string; // uuid v4
 
-  @Column({ unique: true })
+  @Column()
   login: string;
 
   @Column()
@@ -23,12 +25,25 @@ export class User {
   @VersionColumn()
   version: number; // integer number, increments on update
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @Column({ type: 'bigint' })
   createdAt: number; // timestamp of creation
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @Column({ type: 'bigint' })
   updatedAt: number; // timestamp of last update
 
-  @OneToOne(() => Favorites, (favorite) => favorite.user)
+  @OneToOne(() => Favorites, (favorite) => favorite.user, { nullable: true })
   favorite: Favorites;
+
+  @BeforeInsert()
+  setCreateTimestamp() {
+    const now = Date.now();
+    this.createdAt = now;
+    this.updatedAt = now;
+  }
+
+  @BeforeUpdate()
+  setUpdateTimestamp() {
+    this.createdAt = Number(this.createdAt);
+    this.updatedAt = Date.now();
+  }
 }

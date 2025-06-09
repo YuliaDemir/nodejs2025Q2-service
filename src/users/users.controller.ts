@@ -9,13 +9,9 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
-  Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './entities/user.entity';
-import { validate } from 'uuid';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
@@ -23,12 +19,12 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  async getAll(): Promise<Omit<User, 'password'>[]> {
-    return this.userService.findAll();
+  async getAll() {
+    return await this.userService.findAll();
   }
 
   @Get(':id')
-  getById(
+  async getById(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -37,26 +33,18 @@ export class UsersController {
       }),
     )
     id: string,
-    @Res() res: Response,
   ) {
-    if (!validate(id))
-      return res.status(400).json({ message: 'Invalid userId format' });
-    const user = this.userService.findById(id);
-    if (!user) {
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .json({ message: 'User not found' });
-    }
-    return res.status(HttpStatus.OK).json(user);
+    return await this.userService.findById(id);
   }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    res.status(HttpStatus.CREATED).json(this.userService.create(createUserDto));
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.userService.create(createUserDto);
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -65,13 +53,13 @@ export class UsersController {
     )
     id: string,
     @Body() dto: UpdateUserDto,
-  ): Promise<Omit<User, 'password'>> {
-    return this.userService.update(id, dto);
+  ) {
+    return await this.userService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(
+  async remove(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -80,7 +68,7 @@ export class UsersController {
       }),
     )
     id: string,
-  ): void {
-    this.userService.remove(id);
+  ) {
+    return await this.userService.remove(id);
   }
 }

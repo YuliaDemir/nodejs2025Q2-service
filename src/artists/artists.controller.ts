@@ -69,6 +69,6 @@ export class ArtistsController {
     )
     id: string,
   ): Promise<void> {
-    this.artistsService.remove(id);
+    await this.artistsService.remove(id);
   }
 }

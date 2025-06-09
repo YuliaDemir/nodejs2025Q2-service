@@ -22,13 +22,13 @@ export class FavoritesController {
   ) {}
 
   @Get()
-  getAll() {
-    return this.favoritesService.findAll();
+  async getAll() {
+    return await this.favoritesService.findAll();
   }
 
   //TRACKS
   @Post('track/:id')
-  addTrackToFavorites(
+  async addTrackToFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -38,12 +38,12 @@ export class FavoritesController {
     )
     id: string,
   ) {
-    this.favoritesService.addTrack(id);
+    return await this.favoritesService.addTrack(id);
   }
 
   @Delete('track/:id')
   @HttpCode(204)
-  deleteTrackToFavorites(
+  async deleteTrackToFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -53,12 +53,12 @@ export class FavoritesController {
     )
     id: string,
   ) {
-    this.favoritesService.removeTrack(id);
+    return await this.favoritesService.removeTrack(id);
   }
 
   //ARTISTS
   @Post('artist/:id')
-  addArtistToFavorites(
+  async addArtistToFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -68,12 +68,12 @@ export class FavoritesController {
     )
     id: string,
   ) {
-    this.favoritesService.addArtist(id);
+    return await this.favoritesService.addArtist(id);
   }
 
   @Delete('artist/:id')
   @HttpCode(204)
-  deleteArtistFromFavorites(
+  async deleteArtistFromFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -83,12 +83,12 @@ export class FavoritesController {
     )
     id: string,
   ) {
-    this.favoritesService.removeArtist(id);
+    return await this.favoritesService.removeArtist(id);
   }
 
   //ALBUMS
   @Post('album/:id')
-  addAlbumToFavorites(
+  async addAlbumToFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -98,12 +98,12 @@ export class FavoritesController {
     )
     id: string,
   ) {
-    this.favoritesService.addAlbum(id);
+    return await this.favoritesService.addAlbum(id);
   }
 
   @Delete('album/:id')
   @HttpCode(204)
-  deleteAlbumFromFavorites(
+  async deleteAlbumFromFavorites(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -113,6 +113,6 @@ export class FavoritesController {
     )
     id: string,
   ) {
-    this.favoritesService.removeAlbum(id);
+    return await this.favoritesService.removeAlbum(id);
   }
 }

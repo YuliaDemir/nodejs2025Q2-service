@@ -69,6 +69,6 @@ export class TracksController {
     )
     id: string,
   ): Promise<void> {
-    this.tracksService.remove(id);
+    await this.tracksService.remove(id);
   }
 }

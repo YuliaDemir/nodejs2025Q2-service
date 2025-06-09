@@ -14,7 +14,8 @@ export class ArtistsService {
 
   async create(dto: CreateArtistDto): Promise<Artist> {
     const newArtist = this.artistRepository.create(dto);
-    return await this.artistRepository.save(newArtist);
+    const art = await this.artistRepository.save(newArtist);
+    return art;
   }
 
   async findAll(): Promise<Artist[]> {
