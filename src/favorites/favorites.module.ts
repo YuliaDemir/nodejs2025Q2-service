@@ -11,7 +11,12 @@ import { AlbumsModule } from 'src/albums/albums.module';
 import { TracksModule } from 'src/tracks/tracks.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Favorites, Artist, Track, Album]), ArtistsModule, AlbumsModule, TracksModule],
+  imports: [
+    TypeOrmModule.forFeature([Favorites, Artist, Track, Album]),
+    ArtistsModule,
+    AlbumsModule,
+    TracksModule,
+  ],
   controllers: [FavoritesController],
   providers: [FavoritesService],
 })

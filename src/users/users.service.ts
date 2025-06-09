@@ -25,10 +25,11 @@ export class UsersService {
       password: createUserDto.password,
     });
     const saved = await this.userRepository.save(newUser);
-    const safeUser = { ...saved,
+    const safeUser = {
+      ...saved,
       createdAt: Number(saved.createdAt),
       updatedAt: Number(saved.updatedAt),
-     };
+    };
     delete safeUser.password;
     safeUser.version = Number(safeUser.version);
     return safeUser;
@@ -50,10 +51,7 @@ export class UsersService {
     return safeUser;
   }
 
-  async update(
-    id: string,
-    updateDto: UpdateUserDto,
-  ): Promise<ReturnUserDto> {
+  async update(id: string, updateDto: UpdateUserDto): Promise<ReturnUserDto> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User Not found');
     if (user.password !== updateDto.oldPassword)
@@ -71,7 +69,10 @@ export class UsersService {
   }
 
   async remove(id: string) {
-    const user = await this.userRepository.findOne({ where: { id }, relations: ['favorite'] });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['favorite'],
+    });
     if (!user) throw new NotFoundException('User not found');
     await this.userRepository.remove(user);
     return { message: 'User deleted' };

@@ -9,11 +9,11 @@ export class ReturnUserDto {
 
   @IsInt()
   @Min(1)
-  version: number; 
+  version: number;
 
   @IsInt()
-  createdAt: number; 
+  createdAt: number;
 
   @IsInt()
-  updatedAt: number; 
+  updatedAt: number;
 }
