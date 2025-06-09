@@ -8,17 +8,11 @@ import {
   Post,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
-import { ArtistsService } from 'src/artists/artists.service';
-import { AlbumsService } from 'src/albums/albums.service';
-import { TracksService } from 'src/tracks/tracks.service';
 
 @Controller('favs')
 export class FavoritesController {
   constructor(
     private readonly favoritesService: FavoritesService,
-    private readonly artistsService: ArtistsService,
-    private readonly albumsService: AlbumsService,
-    private readonly tracksService: TracksService,
   ) {}
 
   @Get()
