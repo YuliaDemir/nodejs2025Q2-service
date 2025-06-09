@@ -11,29 +11,26 @@
 
 ```
 git clone https://github.com/YuliaDemir/nodejs2025Q2-service.git
+cd nodejs2025Q2-service
 ```
 
 ### 2. Moving to the development branch
 
 ```
-git checkout dev
-```
-
-### 3. Installing NPM modules
-
-```
-npm install
+git checkout dev2
 ```
 
 ## RUNNING application
 
+### 1. Launch your docker app
+
+### 2. Assemble and launch the containers
+
 ```
-npm start
+docker-compose up --build
 ```
 
 After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
 ## Testing
 
