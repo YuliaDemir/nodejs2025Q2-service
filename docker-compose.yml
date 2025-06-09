@@ -9,11 +9,11 @@ services:
     build: ./postgres
     container_name: postgres-db
     environment: 
-      POSTGRES_USER: user123
-      POSTGRES_PASSWORD: 111222
-      POSTGRES_DB: appdb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:${DB_PORT}"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
@@ -28,14 +28,12 @@ services:
     container_name: node-app
     environment: 
       DB_HOST: db
-      DB_USERNAME: user123
-      DB_PASSWORD: 111222
-      DB_NAME: appdb
-      PORT: 4000
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      PORT: ${PORT}
     ports:
-      - "4000:4000"
-    depends_on:
-      - db
+      - "${PORT}:${PORT}"
     networks:
       - app-network
 volumes:
