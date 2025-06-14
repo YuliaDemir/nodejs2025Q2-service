@@ -26,9 +26,9 @@ export class AuthService {
             password: hashedPassword,
         });
 
-        await this.userRepo.save(newUser);
+        const saveUser = await this.userRepo.save(newUser);
 
-        return { message: 'User created' };
+        return { id:  saveUser.id };
     }
 
     async login(login: string, password: string) {

@@ -1,6 +1,6 @@
 import { Injectable, LoggerService, LogLevel } from "@nestjs/common";
-import path from "path";
-import fs from 'fs';
+import * as path from "path";
+import * as fs from 'fs';
 
 @Injectable()
 export class LoggingService implements LoggerService {
@@ -10,7 +10,7 @@ export class LoggingService implements LoggerService {
     constructor() {
         const logLevel = process.env.LOG_LEVEL || 'log';
         this.level = logLevel as LogLevel;
-        const logPath = path.join(__dirname, '../../logs/app.log');
+        const logPath = path.join(__dirname, '../../app.log');
         this.logFile = fs.createWriteStream(logPath, { flags: 'a' });
 
         process.on('uncaughtException', (err) => this.error(`Uncaught ${err.message}`, err.stack));

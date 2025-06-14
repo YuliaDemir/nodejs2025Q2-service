@@ -9,6 +9,7 @@ import { Album } from 'src/albums/entities/album.entity';
 import { ArtistsModule } from 'src/artists/artists.module';
 import { AlbumsModule } from 'src/albums/albums.module';
 import { TracksModule } from 'src/tracks/tracks.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TracksModule } from 'src/tracks/tracks.module';
     ArtistsModule,
     AlbumsModule,
     TracksModule,
+   AuthModule
   ],
   controllers: [FavoritesController],
   providers: [FavoritesService],
