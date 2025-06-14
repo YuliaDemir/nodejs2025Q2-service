@@ -10,7 +10,12 @@ export class LoggingService implements LoggerService {
     constructor() {
         const logLevel = process.env.LOG_LEVEL || 'log';
         this.level = logLevel as LogLevel;
-        const logPath = path.join(__dirname, '../../app.log');
+        const logDir = path.join(__dirname, './logs/app.log');
+        if (!fs.existsSync(logDir)) {
+            fs.mkdirSync(logDir, { recursive: true });
+        }
+        
+        const logPath = path.join(logDir, 'app.log');
         this.logFile = fs.createWriteStream(logPath, { flags: 'a' });
 
         process.on('uncaughtException', (err) => this.error(`Uncaught ${err.message}`, err.stack));
@@ -19,6 +24,7 @@ export class LoggingService implements LoggerService {
 
     private write(message: string) {
         this.logFile.write(`[${new Date().toString()}] --> ${message}\n`);
+        //console.log(`[${new Date().toString()}] --> ${message}\n`);
     }
 
     log(message: string) {

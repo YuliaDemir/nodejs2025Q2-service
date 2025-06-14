@@ -4,6 +4,7 @@ import { configDotenv } from 'dotenv';
 import { ValidationPipe } from '@nestjs/common';
 import { LoggingService } from './logging/logging.service';
 import { ExceptionsFilter } from './filters/all-exceptions.filter';
+import { LoggingInterceptor } from './logging/logging.interseptor';
 
 configDotenv();
 
@@ -17,8 +18,9 @@ process.on('unhandledRejection', (reason) => {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const logger = new LoggingService();
+  const logger = app.get(LoggingService);
 
+  app.useGlobalInterceptors(new LoggingInterceptor(logger));
   app.useGlobalFilters(new ExceptionsFilter(logger));
   app.useGlobalPipes(
     new ValidationPipe({

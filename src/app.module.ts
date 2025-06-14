@@ -9,6 +9,7 @@ import { FavoritesModule } from './favorites/favorites.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { LoggingService } from './logging/logging.service';
 
 @Module({
   imports: [
@@ -33,6 +34,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, LoggingService],
 })
 export class AppModule {}
