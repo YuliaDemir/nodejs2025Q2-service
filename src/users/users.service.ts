@@ -10,6 +10,7 @@ import { randomUUID } from 'crypto';
 import { User } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ReturnUserDto } from './dto/return-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -19,10 +20,11 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<ReturnUserDto> {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser = this.userRepository.create({
       id: randomUUID(),
       login: createUserDto.login,
-      password: createUserDto.password,
+      password: hashedPassword,
     });
     const saved = await this.userRepository.save(newUser);
     const safeUser = {
@@ -54,10 +56,13 @@ export class UsersService {
   async update(id: string, updateDto: UpdateUserDto): Promise<ReturnUserDto> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User Not found');
-    if (user.password !== updateDto.oldPassword)
+
+    const isOldPasswordCorrect = await bcrypt.compare(updateDto.oldPassword, user.password);
+
+    if (!isOldPasswordCorrect)
       throw new ForbiddenException('The password is wrong!');
 
-    user.password = updateDto.newPassword;
+    user.password = await bcrypt.hash(updateDto.newPassword, 10);
     user.version++;
     await this.userRepository.save(user);
 
